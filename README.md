@@ -20,6 +20,14 @@ MagicalRecord was inspired by the ease of Ruby on Rails' Active Record fetching.
 3. Optionally preceed the *CoreData+MagicalRecord.h* import with `#define MR_SHORTHAND` to your PCH file if you want to use MagicalRecord methods without the *MR_prefix* like `findAll` instead of `MR_findAll`
 4. Start writing code!
 
+## Migrating from a *regular* Core Data app.
+
+If your app already is using the typical setup from a new app containing the CoreData stack, your `AppDelegate.m` will contain a read-only property `managedObjectContext` which might be used by your app (specifically by bindings). To **migrate/simplify** to MR, you should simply replace the content of this method by
+
+        return [NSManagedObjectContext MR_defaultContext];
+
+given you obviously have `[MagicalRecord setupCoreDataStack];` at the very beginning of your `applicationDidFinishLaunching...`. You can then remove the `persistentStoreCoordinator` and `managedObjectModel` properties, their synthetize and their implementation, MR having its own stack generator.
+
 # Requirements
 
 MagicalRecord Platform Requirements:
